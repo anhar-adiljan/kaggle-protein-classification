@@ -6,6 +6,9 @@ import pandas as pd
 import numpy as np
 from skimage import io
 
+import torch
+from torchvision import models
+
 def strToList(string_input):
 	return [int(elem) for elem in string_input.split(' ')]
 
@@ -31,7 +34,7 @@ def getIds(root_dir):
 
 def getLabels(label_file):
     if label_file:
-        labels_frame = pd.read_csv(label_file)
+        labels_frame = pd.read_csv(label_file).set_index('Id')
         labels_frame['Target'] = labels_frame['Target'].apply(strToList)
         return labels_frame
     else:
